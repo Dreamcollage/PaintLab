@@ -10,7 +10,7 @@ public class PaintLab extends Applet implements MouseListener,
 	protected int width, height;
 	protected int mxcloc, mycloc;
 	protected int mxrloc, myrloc;
-	protected int tmloc;
+	protected int tmlosc;
 	protected int iBrushSize; // 0 - 100
 	protected boolean isDragging, oob, clicked, pressed, clear;
 	protected Rectangle canvas, rectBrush, rectColor;
