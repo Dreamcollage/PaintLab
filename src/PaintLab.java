@@ -19,14 +19,10 @@ public class PaintLab extends Applet implements MouseListener,
 	protected Color drawColor = Color.BLACK;
 	protected int rCol, gCol, bCol, tempRCol, tempGCol, tempBCol;
 	protected String[] err = new String[7];
-	
-	
+
 	Graphics buffer;
 	Image img;
 
-	
-	
-	
 	public void init() {
 		// define your fields here
 		img = createImage(900, 600);
@@ -51,11 +47,10 @@ public class PaintLab extends Applet implements MouseListener,
 		gIn.setBounds(0, 120, 80, 20);
 		bIn = new TextField("Blue Value", 10);
 		bIn.setBounds(0, 140, 80, 20);
-		
-		for(int i = 0; i > err.length; i++){
+
+		for (int i = 0; i > err.length; i++) {
 			err[i] = "Invalid Operation: ";
 		}
-		
 
 	}
 
@@ -97,8 +92,9 @@ public class PaintLab extends Applet implements MouseListener,
 			try {
 				iBrushSize = Integer.parseInt(brushIn.getText());
 				if (iBrushSize < 0) {
+					err[0] += "Brush minimum value is 0, Recieved \"" + iBrushSize
+							+ "\" ...Setting to 0.";
 					iBrushSize = 0;
-					err[0] += " ";
 
 				}
 			} catch (java.lang.NumberFormatException e) {
@@ -116,13 +112,13 @@ public class PaintLab extends Applet implements MouseListener,
 			try {
 				rCol = Integer.parseInt(rIn.getText());
 				if (rCol > 100) {
-					//err += "Red maximum value is 100, Recieved \"" + rCol
-					//		+ "\" ...Setting to 100.";
+					err[0] += "Red maximum value is 100, Recieved \"" + rCol
+							+ "\" ...Setting to 100.";
 					rCol = 100;
 				}
 				if (rCol < 0) {
-					//err += "Red minimum value is 0, Recieved \"" + rCol
-					//		+ "\" ...Setting to 0.";
+					err[1] += "Red minimum value is 0, Recieved \"" + rCol
+							+ "\" ...Setting to 0.";
 					rCol = 0;
 				}
 
@@ -133,13 +129,13 @@ public class PaintLab extends Applet implements MouseListener,
 				gCol = Integer.parseInt(gIn.getText());
 
 				if (gCol > 100) {
-					//err += "Green maximum value is 100, Recieved \"" + gCol
-					//		+ "\" ...Setting to 100.";
+					err[2] += "Green maximum value is 100, Recieved \"" + gCol
+							+ "\" ...Setting to 100.";
 					gCol = 100;
 				}
 				if (gCol < 0) {
-					//err += "Green minimum value is 0, Recieved \"" + gCol
-					//		+ "\" ...Setting to 0.";
+					err[3] += "Green minimum value is 0, Recieved \"" + gCol
+							+ "\" ...Setting to 0.";
 					gCol = 0;
 				}
 
@@ -149,13 +145,13 @@ public class PaintLab extends Applet implements MouseListener,
 			try {
 				bCol = Integer.parseInt(bIn.getText());
 				if (bCol > 100) {
-					//err += "Blue maximum value is 100, Recieved \"" + bCol
-					//		+ "\" ...Setting to 100.";
+					err[4] += "Blue maximum value is 100, Recieved \"" + bCol
+							+ "\" ...Setting to 100.";
 					bCol = 100;
 				}
 				if (bCol < 0) {
-					//err += "Blue minimum value is 0, Recieved \"" + bCol
-					//		+ "\" ...Setting to 0.";
+					err[5] += "Blue minimum value is 0, Recieved \"" + bCol
+							+ "\" ...Setting to 0.";
 					bCol = 0;
 				}
 
@@ -173,10 +169,10 @@ public class PaintLab extends Applet implements MouseListener,
 			add(bIn);
 		}
 
-		//if (err[] != "Invalid Operation: ") {
-		//	g.setColor(Color.RED);
-		//	g.drawString(err, 80, 14);
-		//}
+		// if (err[] != "Invalid Operation: ") {
+		// g.setColor(Color.RED);
+		// g.drawString(err, 80, 14);
+		// }
 
 		// canvas coords
 		g.setColor(Color.BLACK);
