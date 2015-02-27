@@ -14,7 +14,7 @@ public class PaintLab extends Applet implements MouseListener,
 	protected int iBrushSize; // 0 - 100
 	protected boolean isDragging, oob, clicked, pressed, clear;
 	protected Rectangle canvas, rectBrush, rectColor;
-	protected int counter; // yet to be used
+	protected int counter, opacounter = 255;
 	protected TextField brushIn, rIn, gIn, bIn;
 	protected Color drawColor = Color.BLACK;
 	protected int rCol, gCol, bCol, tempRCol, tempGCol, tempBCol;
@@ -44,6 +44,10 @@ public class PaintLab extends Applet implements MouseListener,
 		gIn = new TextField("Green Value", 10);
 		bIn = new TextField("Blue Value", 10);
 
+		for (int i = 0; i < err.length; i++) {
+			err[i] = "Invalid Operation: ";
+		}
+
 	}
 
 	public void paint(Graphics g) {
@@ -51,14 +55,20 @@ public class PaintLab extends Applet implements MouseListener,
 		height = getSize().height;
 		width = getSize().width;
 
+		
+		if(counter > 200)
+			opacounter = opacounter - 2;
+		if (counter > 327) {
+			counter = 0;
+			opacounter = 255;
+			for (int i = 0; i < err.length; i++)
+				err[i] = "Invalid Operation: ";
+		}
+
 		brushIn.setBounds(0, 50, 80, 20);
 		rIn.setBounds(0, 100, 80, 20);
 		gIn.setBounds(0, 120, 80, 20);
 		bIn.setBounds(0, 140, 80, 20);
-
-		for (int i = 0; i < err.length; i++) {
-			err[i] = "Invalid Operation: ";
-		}
 
 		g.setColor(getBackground());
 		g.fillRect(0, 101, 80, 200);
@@ -67,7 +77,7 @@ public class PaintLab extends Applet implements MouseListener,
 		g.drawImage(img, 80, 20, 900, 600, this);
 		buffer.setColor(Color.BLACK);
 		g.setColor(getBackground());
-		g.fillRect(0, (height - 20), 800, 20);
+		g.fillRect(0, (height - 20), width, 20);
 		g.setColor(Color.BLACK);
 
 		// draw brush button
@@ -96,6 +106,7 @@ public class PaintLab extends Applet implements MouseListener,
 					err[0] += "Brush minimum value is 0, Recieved \""
 							+ iBrushSize + "\" ...Setting to 0.";
 					iBrushSize = 0;
+					brushIn.setText("0");
 
 				}
 			} catch (java.lang.NumberFormatException e) {
@@ -116,11 +127,13 @@ public class PaintLab extends Applet implements MouseListener,
 					err[1] += "Red maximum value is 100, Recieved \"" + rCol
 							+ "\" ...Setting to 100.";
 					rCol = 100;
+					rIn.setText("100");
 				}
 				if (rCol < 0) {
 					err[2] += "Red minimum value is 0, Recieved \"" + rCol
 							+ "\" ...Setting to 0.";
 					rCol = 0;
+					rIn.setText("0");
 				}
 
 			} catch (java.lang.NumberFormatException e) {
@@ -133,11 +146,13 @@ public class PaintLab extends Applet implements MouseListener,
 					err[3] += "Green maximum value is 100, Recieved \"" + gCol
 							+ "\" ...Setting to 100.";
 					gCol = 100;
+					gIn.setText("100");
 				}
 				if (gCol < 0) {
 					err[4] += "Green minimum value is 0, Recieved \"" + gCol
 							+ "\" ...Setting to 0.";
 					gCol = 0;
+					gIn.setText("0");
 				}
 
 			} catch (java.lang.NumberFormatException e) {
@@ -149,11 +164,13 @@ public class PaintLab extends Applet implements MouseListener,
 					err[5] += "Blue maximum value is 100, Recieved \"" + bCol
 							+ "\" ...Setting to 100.";
 					bCol = 100;
+					bIn.setText("100");
 				}
 				if (bCol < 0) {
 					err[6] += "Blue minimum value is 0, Recieved \"" + bCol
 							+ "\" ...Setting to 0.";
 					bCol = 0;
+					bIn.setText("0");
 				}
 
 			} catch (java.lang.NumberFormatException e) {
@@ -172,8 +189,9 @@ public class PaintLab extends Applet implements MouseListener,
 
 		for (int i = 0; i < err.length; i++) {
 			if (err[i] != "Invalid Operation: ") {
-				g.setColor(Color.RED);
+				g.setColor(new Color(255,0,0,opacounter));
 				g.drawString(err[i], 80, 15);
+				counter++;
 			}
 		}
 
@@ -201,7 +219,7 @@ public class PaintLab extends Applet implements MouseListener,
 		}
 		System.out.println(counter + " " + mxloc + " " + myloc + " "
 				+ isDragging + " " + width + " " + height + " " + iBrushSize
-				+ " " + clicked);
+				+ " " + clicked + " " + opacounter);
 
 		clicked = false;
 		pressed = false;
